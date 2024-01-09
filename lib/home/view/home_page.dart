@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,6 +38,27 @@ class _HomePageState extends State<HomePage> {
               height: height,
               width: width,
               color: Colors.black.withOpacity(0.2),
+            ),
+          ),
+          SizedBox(
+            height: height,
+            width: width,
+            child: const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Working...',
+                    style: TextStyle(color: Colors.white, fontSize: 40),
+                  ),
+                  SizedBox(height: 30),
+                  Icon(
+                    CupertinoIcons.hammer,
+                    color: Colors.white,
+                    size: 40,
+                  )
+                ],
+              ),
             ),
           ),
         ],

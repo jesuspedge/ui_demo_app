@@ -3,14 +3,14 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomeDesktopPage extends StatefulWidget {
+  const HomeDesktopPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeDesktopPage> createState() => _HomeDesktopPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeDesktopPageState extends State<HomeDesktopPage> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
@@ -19,15 +19,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
+          Image.asset(
+            '/images/background.jpg',
             height: height,
             width: width,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('/images/background.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
+            fit: BoxFit.cover,
           ),
           BackdropFilter(
             filter: ImageFilter.blur(

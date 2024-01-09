@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:ui_demos/home/home.dart';
+import 'package:ui_demos/home_desktop/home_desktop.dart';
+import 'package:ui_demos/home_mobile/home_mobile.dart';
 
 class UIDemosApp extends StatelessWidget {
   const UIDemosApp({super.key});
@@ -13,7 +15,23 @@ class UIDemosApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: isDesktop() ? const HomeDesktopPage() : const HomeMobilePage(),
     );
+  }
+}
+
+bool isDesktop() {
+  switch (defaultTargetPlatform) {
+    case TargetPlatform.windows:
+      return true;
+
+    case TargetPlatform.macOS:
+      return true;
+
+    case TargetPlatform.linux:
+      return true;
+
+    default:
+      return false;
   }
 }

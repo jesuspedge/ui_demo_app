@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:ui_demos/home_desktop/home_desktop.dart';
+import 'package:ui_demos/home_mobile/home_mobile.dart';
 
 class HomeDesktopPage extends StatefulWidget {
   const HomeDesktopPage({super.key});
@@ -36,50 +37,13 @@ class _HomeDesktopPageState extends State<HomeDesktopPage> {
               color: Colors.black.withOpacity(0.2),
             ),
           ),
-          /*SizedBox(
-            height: height,
-            width: width,
-            child: const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Working...',
-                    style: TextStyle(color: Colors.white, fontSize: 40),
-                  ),
-                  SizedBox(height: 30),
-                  Icon(
-                    CupertinoIcons.hammer,
-                    color: Colors.white,
-                    size: 40,
-                  )
-                ],
-              ),
-            ),
-          ),*/
           Center(
             child: PhoneFrameWidget(
               height: height * 0.9,
-              child: const AppHome(),
+              child: const HomeMobilePage(),
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class AppHome extends StatelessWidget {
-  const AppHome({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('UI Demos App'),
-      ),
-      body: const Center(
-        child: Text('UI Demos App'),
       ),
     );
   }

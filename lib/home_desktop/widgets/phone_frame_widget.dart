@@ -11,15 +11,20 @@ class PhoneFrameWidget extends StatelessWidget {
     return Container(
       height: height,
       width: height * 0.5,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black, width: 10),
-        borderRadius: const BorderRadius.all(Radius.circular(30)),
-        boxShadow: const [
+      decoration: const BoxDecoration(
+        border: BorderDirectional(
+            top: BorderSide(width: 15),
+            start: BorderSide(width: 5),
+            end: BorderSide(width: 5),
+            bottom: BorderSide(width: 10)),
+        borderRadius: BorderRadius.vertical(
+            top: Radius.circular(55), bottom: Radius.circular(45)),
+        boxShadow: [
           BoxShadow(color: Colors.black45, spreadRadius: 5.0, blurRadius: 5.0)
         ],
       ),
       child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(18)),
+          borderRadius: const BorderRadius.all(Radius.circular(40)),
           child: child),
     );
   }

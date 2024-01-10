@@ -11,29 +11,23 @@ class HomeMobilePage extends StatefulWidget {
 class _HomeMobilePageState extends State<HomeMobilePage> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.sizeOf(context).height;
-    double width = MediaQuery.sizeOf(context).width;
-
     return Scaffold(
-      body: SizedBox(
-        height: height,
-        width: width,
-        child: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Working...',
-                style: TextStyle(color: Colors.black, fontSize: 40),
-              ),
-              SizedBox(height: 30),
-              Icon(
-                CupertinoIcons.hammer,
-                color: Colors.black,
-                size: 40,
-              )
-            ],
-          ),
+      appBar: AppBar(
+        backgroundColor: Colors.green.shade100,
+        elevation: 2.0,
+        title: const Text('UI Demos App'),
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Working...',
+              style: TextStyle(fontSize: 40),
+            ),
+            SizedBox(height: 40),
+            Icon(CupertinoIcons.hammer, size: 40)
+          ],
         ),
       ),
     );

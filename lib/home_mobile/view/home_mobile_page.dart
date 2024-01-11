@@ -9,25 +9,102 @@ class HomeMobilePage extends StatefulWidget {
 }
 
 class _HomeMobilePageState extends State<HomeMobilePage> {
+  final List<Map> examples = List.generate(20,
+          (index) => {"image": '/images/example.png', "name": "Example $index"})
+      .toList();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green.shade100,
-        elevation: 2.0,
-        title: const Text('UI Demos App'),
-      ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Working...',
-              style: TextStyle(fontSize: 40),
-            ),
-            SizedBox(height: 40),
-            Icon(CupertinoIcons.hammer, size: 40)
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF348F50),
+            Color(0xFF56B4D3),
           ],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.black.withOpacity(0.5),
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          title: const Text(
+            'UI Demos App',
+            style: TextStyle(
+                color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: GridView.builder(
+                physics: const BouncingScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 300,
+                    childAspectRatio: 1,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20),
+                itemCount: examples.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Stack(
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                  examples[index]['image'],
+                                ),
+                                fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(15)),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          gradient: const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Colors.transparent, Colors.black]),
+                        ),
+                      ),
+                      Positioned(
+                        top: 10,
+                        right: 10,
+                        child: Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.black45,
+                                    spreadRadius: 1,
+                                    blurRadius: 20)
+                              ]),
+                          child: const Icon(
+                            CupertinoIcons.chevron_right,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 15,
+                        left: 10,
+                        child: Text(
+                          examples[index]["name"],
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  );
+                }),
+          ),
         ),
       ),
     );

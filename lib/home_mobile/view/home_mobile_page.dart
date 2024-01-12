@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_demos/pages/pages.dart';
 
 class HomeMobilePage extends StatefulWidget {
   const HomeMobilePage({super.key});
@@ -9,10 +10,6 @@ class HomeMobilePage extends StatefulWidget {
 }
 
 class _HomeMobilePageState extends State<HomeMobilePage> {
-  final List<Map> examples = List.generate(20,
-          (index) => {"image": '/images/example.png', "name": "Example $index"})
-      .toList();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,60 +45,66 @@ class _HomeMobilePageState extends State<HomeMobilePage> {
                     childAspectRatio: 1,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
-                itemCount: examples.length,
+                itemCount: pages.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Stack(
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(
-                                  examples[index]['image'],
-                                ),
-                                fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(15)),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          gradient: const LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [Colors.transparent, Colors.black]),
-                        ),
-                      ),
-                      Positioned(
-                        top: 10,
-                        right: 10,
-                        child: Container(
-                          padding: const EdgeInsets.all(3),
+                  return GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => pages[index].widgetPage)),
+                    child: Stack(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                              boxShadow: const [
-                                BoxShadow(
-                                    color: Colors.black45,
-                                    spreadRadius: 1,
-                                    blurRadius: 20)
-                              ]),
-                          child: const Icon(
-                            CupertinoIcons.chevron_right,
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    pages[index].imageName,
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(15)),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            gradient: const LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Colors.transparent, Colors.black]),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        bottom: 15,
-                        left: 10,
-                        child: Text(
-                          examples[index]["name"],
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
+                        Positioned(
+                          top: 10,
+                          right: 10,
+                          child: Container(
+                            padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.black45,
+                                      spreadRadius: 1,
+                                      blurRadius: 20)
+                                ]),
+                            child: const Icon(
+                              CupertinoIcons.chevron_right,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                        Positioned(
+                          bottom: 15,
+                          left: 10,
+                          child: Text(
+                            pages[index].name,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 }),
           ),

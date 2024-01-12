@@ -1,8 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ui_demos/app/app.dart';
 import 'package:ui_demos/home_desktop/home_desktop.dart';
-import 'package:ui_demos/home_mobile/home_mobile.dart';
 
 class HomeDesktopPage extends StatefulWidget {
   const HomeDesktopPage({super.key});
@@ -38,9 +39,11 @@ class _HomeDesktopPageState extends State<HomeDesktopPage> {
             ),
           ),
           Center(
-            child: PhoneFrameWidget(
-              height: height * 0.9,
-              child: const HomeMobilePage(),
+            child: BlocBuilder<AppBloc, AppState>(
+              builder: (context, state) {
+                return PhoneFrameWidget(
+                    height: height * 0.9, child: state.pageSelected);
+              },
             ),
           )
         ],

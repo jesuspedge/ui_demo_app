@@ -42,7 +42,12 @@ class _HomeDesktopPageState extends State<HomeDesktopPage> {
             child: BlocBuilder<AppBloc, AppState>(
               builder: (context, state) {
                 return PhoneFrameWidget(
-                    height: height * 0.9, child: state.pageSelected);
+                    height: height * 0.9,
+                    child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 400),
+                        switchInCurve: Curves.easeIn,
+                        switchOutCurve: Curves.easeIn,
+                        child: state.pageSelected));
               },
             ),
           )

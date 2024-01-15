@@ -68,3 +68,13 @@ bool isDesktop() {
       return false;
   }
 }
+
+Route customRoute(Widget page) {
+  return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: ((context, animation, secondaryAnimation, child) =>
+          FadeTransition(
+            opacity: animation,
+            child: child,
+          )));
+}

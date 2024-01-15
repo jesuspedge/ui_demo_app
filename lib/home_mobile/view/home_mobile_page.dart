@@ -28,6 +28,7 @@ class _HomeMobilePageState extends State<HomeMobilePage> {
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
@@ -58,10 +59,7 @@ class _HomeMobilePageState extends State<HomeMobilePage> {
                                 pageSelected: pages[index].widgetPage));
                           } else {
                             await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        pages[index].widgetPage));
+                                context, customRoute(pages[index].widgetPage));
                           }
                         },
                         child: Stack(

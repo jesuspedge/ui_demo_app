@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,95 +23,137 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
   Widget build(BuildContext context) {
     double percent = progressPercent();
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
-        leading: BlocBuilder<AppBloc, AppState>(
-          builder: (context, state) {
-            return GestureDetector(
-              onTap: () {
-                if (state.isDesktop) {
-                  context.read<AppBloc>().add(const ChangePageSelectedEvent(
-                      pageSelected: HomeMobilePage()));
-                } else {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Icon(Icons.arrow_back_ios_new_rounded,
-                  color: Colors.white),
-            );
-          },
-        ),
-        title: const Text(
-          'Verification Code',
-          style: TextStyle(color: Colors.white),
-        ),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF005C97),
+              Color(0xFF363795),
+            ]),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              height: 250,
-              width: 250,
-              child: CustomProgressIndicator(
-                percent: percent,
+      child: Scaffold(
+        backgroundColor: Colors.black.withOpacity(0.5),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          leading: BlocBuilder<AppBloc, AppState>(
+            builder: (context, state) {
+              return GestureDetector(
+                onTap: () {
+                  if (state.isDesktop) {
+                    context.read<AppBloc>().add(const ChangePageSelectedEvent(
+                        pageSelected: HomeMobilePage()));
+                  } else {
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: const Icon(Icons.arrow_back_ios_new_rounded,
+                    color: Colors.white),
+              );
+            },
+          ),
+          title: const Text(
+            'Verification Code',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    'Confirmation',
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(height: 10),
+                  RichText(
+                    text: TextSpan(
+                      text:
+                          'Please enter the code we sent to the number ********73.',
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: Colors.white.withOpacity(0.5),
+                          ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Form(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+              SizedBox(
+                height: 250,
+                width: 250,
+                child: CustomProgressIndicator(
+                  percent: percent,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Column(
                   children: [
-                    CustomNumberForm(
-                      onChange: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                          setState(() => numbersList[0] = value);
-                        } else {
-                          setState(() => numbersList[0] = '-1');
-                        }
-                      },
+                    Form(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CustomNumberForm(
+                            onChange: (value) {
+                              if (value.length == 1) {
+                                FocusScope.of(context).nextFocus();
+                                setState(() => numbersList[0] = value);
+                              } else {
+                                setState(() => numbersList[0] = '-1');
+                              }
+                            },
+                          ),
+                          CustomNumberForm(
+                            onChange: (value) {
+                              if (value.length == 1) {
+                                FocusScope.of(context).nextFocus();
+                                setState(() => numbersList[1] = value);
+                              } else {
+                                setState(() => numbersList[1] = '-1');
+                              }
+                            },
+                          ),
+                          CustomNumberForm(
+                            onChange: (value) {
+                              if (value.length == 1) {
+                                FocusScope.of(context).nextFocus();
+                                setState(() => numbersList[2] = value);
+                              } else {
+                                setState(() => numbersList[2] = '-1');
+                              }
+                            },
+                          ),
+                          CustomNumberForm(
+                            onChange: (value) {
+                              if (value.length == 1) {
+                                FocusScope.of(context).nextFocus();
+                                setState(() => numbersList[3] = value);
+                              } else {
+                                setState(() => numbersList[3] = '-1');
+                              }
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                    CustomNumberForm(
-                      onChange: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                          setState(() => numbersList[1] = value);
-                        } else {
-                          setState(() => numbersList[1] = '-1');
-                        }
-                      },
-                    ),
-                    CustomNumberForm(
-                      onChange: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                          setState(() => numbersList[2] = value);
-                        } else {
-                          setState(() => numbersList[2] = '-1');
-                        }
-                      },
-                    ),
-                    CustomNumberForm(
-                      onChange: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                          setState(() => numbersList[3] = value);
-                        } else {
-                          setState(() => numbersList[3] = '-1');
-                        }
-                      },
+                    const SizedBox(height: 10),
+                    Text(
+                      'RESEND CODE',
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ),
-            ),
-            ElevatedButton(
+              ElevatedButton(
                 onPressed: numbersList.contains('-1') ? null : () {},
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
@@ -125,8 +166,10 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                       color: numbersList.contains('-1')
                           ? Colors.white.withOpacity(0.6)
                           : Colors.white),
-                ))
-          ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -228,7 +271,7 @@ class _CustomProgressIndicatorState extends State<CustomProgressIndicator>
         Positioned.fill(
           child: CircularProgressIndicator(
             value: controller.value,
-            color: Colors.white,
+            color: Colors.white.withOpacity(0.9),
             strokeWidth: 40,
           ),
         ),

@@ -45,7 +45,7 @@ class _HomeMobilePageState extends State<HomeMobilePage> {
                 physics: const BouncingScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 300,
-                    childAspectRatio: 1,
+                    childAspectRatio: 3 / 4,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
                 itemCount: pages.length,

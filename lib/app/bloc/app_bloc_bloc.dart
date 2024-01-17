@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui_demos/home_mobile/home_mobile.dart';
-import 'package:ui_demos/pages/all_pages/01_verification_code/verification_code_page.dart';
 
 part 'app_bloc_event.dart';
 part 'app_bloc_state.dart';

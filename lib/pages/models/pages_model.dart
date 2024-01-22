@@ -12,7 +12,7 @@ class UIPage {
 
 List<UIPage> pages = [
   UIPage(
-      imageName: 'images/01codecheck.png',
+      imageName: 'assets/images/01codecheck.png',
       widgetPage: const VerificationCodePage(),
       name: 'Verification Code')
 ];

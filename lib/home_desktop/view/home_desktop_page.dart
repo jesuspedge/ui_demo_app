@@ -22,7 +22,7 @@ class _HomeDesktopPageState extends State<HomeDesktopPage> {
       body: Stack(
         children: [
           Image.asset(
-            '/images/background.jpg',
+            'assets/images/background.jpg',
             height: height,
             width: width,
             fit: BoxFit.cover,

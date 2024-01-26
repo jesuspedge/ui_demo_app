@@ -16,7 +16,7 @@ List<UIPage> pages = [
       widgetPage: const VerificationCodePage(),
       name: 'Verification Code'),
   UIPage(
-      imageName: 'assets/images/01codecheck.png',
+      imageName: 'assets/images/02coffemaker.png',
       widgetPage: const CoffeMakerPage(),
       name: 'Coffe Maker')
 ];

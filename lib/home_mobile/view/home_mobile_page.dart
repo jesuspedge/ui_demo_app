@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,6 +39,27 @@ class _HomeMobilePageState extends State<HomeMobilePage> {
             style: TextStyle(
                 color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
           ),
+          actions: [
+            GestureDetector(
+              onTap: () => html.window
+                  .open('https://github.com/jesuspedge/ui_demo_app', 'Github'),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  margin: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(2),
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Image.asset(
+                    'assets/images/github_logo.png',
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         body: Center(
           child: Padding(

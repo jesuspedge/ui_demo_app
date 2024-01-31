@@ -19,6 +19,7 @@ class _CoffeMakerPageState extends State<CoffeMakerPage> {
   final Map<String, Widget> pages = {
     'Size': const SizePage(),
     'Milk Type': const MilkTypePage(),
+    'Milk Balance': const MilkBalancePage()
   };
 
   @override

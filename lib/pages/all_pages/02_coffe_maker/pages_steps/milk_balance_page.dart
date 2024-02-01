@@ -11,6 +11,7 @@ class MilkBalancePage extends StatefulWidget {
 
 class _MilkBalancePageState extends State<MilkBalancePage> {
   double sliderValue = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(

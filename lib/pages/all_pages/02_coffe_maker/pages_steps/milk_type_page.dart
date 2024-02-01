@@ -89,7 +89,7 @@ class MilkTypePage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(40),
                   child: Image.asset(
-                    'assets/images/02coffemaker/cow.png',
+                    'assets/images/02coffemaker/coconut.png',
                     fit: BoxFit.contain,
                     color: Constants().yellowColor,
                   ),

@@ -16,16 +16,18 @@ class CoffeMakerPage extends StatefulWidget {
 }
 
 class _CoffeMakerPageState extends State<CoffeMakerPage> {
-  final Map<String, Widget> pages = {
-    'Size': const SizePage(),
-    'Milk Type': const MilkTypePage(),
-    'Milk Balance': const MilkBalancePage(),
-    'Foam': const FoamPage()
-  };
+  int indexPageSelected = 0;
 
   @override
   Widget build(BuildContext context) {
-    int _indexPageSelected = 0;
+    final Map<String, Widget> pages = {
+      'Size': SizePage(onTap: () => setState(() => indexPageSelected = 1)),
+      'Milk Type':
+          MilkTypePage(onTap: () => setState(() => indexPageSelected = 2)),
+      'Milk Balance':
+          MilkBalancePage(onTap: () => setState(() => indexPageSelected = 3)),
+      'Foam': FoamPage(onTap: () => setState(() => indexPageSelected = 0))
+    };
 
     return Container(
       decoration: const BoxDecoration(
@@ -69,7 +71,7 @@ class _CoffeMakerPageState extends State<CoffeMakerPage> {
               width: double.infinity,
               margin: const EdgeInsets.only(top: 20, bottom: 20, left: 30),
               child: Text(
-                pages.keys.elementAt(_indexPageSelected),
+                pages.keys.elementAt(indexPageSelected),
                 textAlign: TextAlign.left,
                 style: Theme.of(context)
                     .textTheme
@@ -78,7 +80,7 @@ class _CoffeMakerPageState extends State<CoffeMakerPage> {
               ),
             ),
             Expanded(
-              child: pages.values.elementAt(_indexPageSelected),
+              child: pages.values.elementAt(indexPageSelected),
             ),
           ],
         ),

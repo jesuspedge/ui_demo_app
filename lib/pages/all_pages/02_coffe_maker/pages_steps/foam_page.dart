@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:ui_demos/pages/all_pages/02_coffe_maker/constanst.dart';
 
 class FoamPage extends StatefulWidget {
-  const FoamPage({super.key});
+  final void Function() onTap;
+  const FoamPage({super.key, required this.onTap});
 
   @override
   State<FoamPage> createState() => _FoamPageState();
@@ -47,6 +50,7 @@ class _FoamPageState extends State<FoamPage> {
                       dimension: 100,
                       child: CustomPaint(
                         foregroundPainter: FilledCupPainter(),
+                        painter: FoamCupPainter(percent: sliderValue / 100),
                       ),
                     ),
                     Text(
@@ -61,12 +65,15 @@ class _FoamPageState extends State<FoamPage> {
               ],
             ),
           ),
-          Text(
-            'NEXT',
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge!
-                .copyWith(color: Constants().whiteColor),
+          GestureDetector(
+            onTap: widget.onTap,
+            child: Text(
+              'NEXT',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: Constants().whiteColor),
+            ),
           ),
         ],
       ),
@@ -105,6 +112,35 @@ class FilledCupPainter extends CustomPainter {
         radius: const Radius.circular(15), clockwise: false);
 
     canvas.drawPath(arc3, painter);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
+class FoamCupPainter extends CustomPainter {
+  final double percent;
+
+  FoamCupPainter({super.repaint, required this.percent});
+  @override
+  void paint(Canvas canvas, Size size) {
+    final painter = Paint()
+      ..style = PaintingStyle.fill
+      ..color = Constants().whiteColor;
+
+    final path = Path()
+      ..moveTo(size.width * 0.07, 0)
+      ..arcToPoint(
+          Offset(size.width * lerpDouble(0.07, 0.25, percent)!.toDouble(),
+              (size.height * percent) * 0.75),
+          radius: const Radius.circular(200),
+          clockwise: false)
+      ..lineTo(size.width * lerpDouble(0.83, 0.7, percent)!.toDouble(),
+          (size.height * percent) * 0.75)
+      ..arcToPoint(Offset(size.width * 0.83, 0),
+          radius: const Radius.circular(200), clockwise: false);
+
+    canvas.drawPath(path, painter);
   }
 
   @override

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ui_demos/pages/all_pages/02_coffe_maker/constanst.dart';
 
 class MilkBalancePage extends StatefulWidget {
-  const MilkBalancePage({super.key});
+  final void Function() onTap;
+  const MilkBalancePage({super.key, required this.onTap});
 
   @override
   State<MilkBalancePage> createState() => _MilkBalancePageState();
@@ -41,12 +42,15 @@ class _MilkBalancePageState extends State<MilkBalancePage> {
               ),
             ),
           ),
-          Text(
-            'NEXT',
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge!
-                .copyWith(color: Constants().whiteColor),
+          GestureDetector(
+            onTap: widget.onTap,
+            child: Text(
+              'NEXT',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: Constants().whiteColor),
+            ),
           ),
         ],
       ),

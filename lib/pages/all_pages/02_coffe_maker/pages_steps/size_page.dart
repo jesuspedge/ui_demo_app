@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ui_demos/pages/all_pages/02_coffe_maker/constanst.dart';
 
 class SizePage extends StatelessWidget {
-  const SizePage({super.key});
+  final void Function() onTap;
+  const SizePage({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -14,54 +15,60 @@ class SizePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: ColoredBox(
-                  color: Constants().backColor.withOpacity(0.2),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Transform.scale(
-                        scale: 0.6,
-                        child: SizedBox.square(
-                          dimension: 100,
-                          child: CustomPaint(
-                            foregroundPainter: CupPainter(),
+                child: GestureDetector(
+                  onTap: onTap,
+                  child: ColoredBox(
+                    color: Constants().backColor.withOpacity(0.2),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Transform.scale(
+                          scale: 0.6,
+                          child: SizedBox.square(
+                            dimension: 100,
+                            child: CustomPaint(
+                              foregroundPainter: CupPainter(),
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        'S',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(color: Constants().whiteColor),
-                      )
-                    ],
+                        Text(
+                          'S',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(color: Constants().whiteColor),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
               Expanded(
-                child: ColoredBox(
-                  color: Constants().backColor.withOpacity(0.4),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Transform.scale(
-                        scale: 0.7,
-                        child: SizedBox.square(
-                          dimension: 100,
-                          child: CustomPaint(
-                            foregroundPainter: CupPainter(),
+                child: GestureDetector(
+                  onTap: onTap,
+                  child: ColoredBox(
+                    color: Constants().backColor.withOpacity(0.4),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Transform.scale(
+                          scale: 0.7,
+                          child: SizedBox.square(
+                            dimension: 100,
+                            child: CustomPaint(
+                              foregroundPainter: CupPainter(),
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        'M',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(color: Constants().whiteColor),
-                      )
-                    ],
+                        Text(
+                          'M',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(color: Constants().whiteColor),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -73,54 +80,60 @@ class SizePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: ColoredBox(
-                  color: Constants().backColor.withOpacity(0.6),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Transform.scale(
-                        scale: 0.8,
-                        child: SizedBox.square(
-                          dimension: 100,
-                          child: CustomPaint(
-                            foregroundPainter: CupPainter(),
+                child: GestureDetector(
+                  onTap: onTap,
+                  child: ColoredBox(
+                    color: Constants().backColor.withOpacity(0.6),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Transform.scale(
+                          scale: 0.8,
+                          child: SizedBox.square(
+                            dimension: 100,
+                            child: CustomPaint(
+                              foregroundPainter: CupPainter(),
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        'L',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(color: Constants().whiteColor),
-                      )
-                    ],
+                        Text(
+                          'L',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(color: Constants().whiteColor),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
               Expanded(
-                child: ColoredBox(
-                  color: Constants().backColor.withOpacity(0.8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Transform.scale(
-                        scale: 0.95,
-                        child: SizedBox.square(
-                          dimension: 100,
-                          child: CustomPaint(
-                            foregroundPainter: CupPainter(),
+                child: GestureDetector(
+                  onTap: onTap,
+                  child: ColoredBox(
+                    color: Constants().backColor.withOpacity(0.8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Transform.scale(
+                          scale: 0.95,
+                          child: SizedBox.square(
+                            dimension: 100,
+                            child: CustomPaint(
+                              foregroundPainter: CupPainter(),
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        'XL',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(color: Constants().whiteColor),
-                      )
-                    ],
+                        Text(
+                          'XL',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(color: Constants().whiteColor),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

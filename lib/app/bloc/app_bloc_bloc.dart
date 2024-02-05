@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui_demos/home_mobile/home_mobile.dart';
 
-import '../../pages/all_pages/02_coffe_maker/coffe_maker_page.dart';
-
 part 'app_bloc_event.dart';
 part 'app_bloc_state.dart';
 

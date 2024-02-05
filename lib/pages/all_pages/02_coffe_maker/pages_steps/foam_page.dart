@@ -12,8 +12,30 @@ class FoamPage extends StatefulWidget {
   State<FoamPage> createState() => _FoamPageState();
 }
 
-class _FoamPageState extends State<FoamPage> {
+class _FoamPageState extends State<FoamPage> with TickerProviderStateMixin {
+  late AnimationController animationController;
+  late Animation animation;
   double sliderValue = 0;
+
+  @override
+  void initState() {
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 400))
+      ..addListener(() => setState(() {}));
+
+    animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: animationController, curve: Curves.fastOutSlowIn));
+
+    super.initState();
+
+    animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +53,19 @@ class _FoamPageState extends State<FoamPage> {
                   quarterTurns: 1,
                   child: SliderTheme(
                     data: const SliderThemeData(trackHeight: 10),
-                    child: Slider(
-                      value: sliderValue,
-                      onChanged: (newValue) =>
-                          setState(() => sliderValue = newValue),
-                      min: 0.0,
-                      max: 100.0,
-                      thumbColor: Constants().whiteColor,
-                      activeColor: Constants().whiteColor,
-                      inactiveColor: Constants().yellowColor,
+                    child: Transform.scale(
+                      alignment: Alignment.centerLeft,
+                      scaleX: animation.value,
+                      child: Slider(
+                        value: sliderValue,
+                        onChanged: (newValue) =>
+                            setState(() => sliderValue = newValue),
+                        min: 0.0,
+                        max: 100.0,
+                        thumbColor: Constants().whiteColor,
+                        activeColor: Constants().whiteColor,
+                        inactiveColor: Constants().yellowColor,
+                      ),
                     ),
                   ),
                 ),
@@ -48,17 +74,27 @@ class _FoamPageState extends State<FoamPage> {
                   children: [
                     SizedBox.square(
                       dimension: 100,
-                      child: CustomPaint(
-                        foregroundPainter: FilledCupPainter(),
-                        painter: FoamCupPainter(percent: sliderValue / 100),
+                      child: Transform.scale(
+                        scale: animation.value,
+                        child: CustomPaint(
+                          foregroundPainter: FilledCupPainter(),
+                          painter: FoamCupPainter(percent: sliderValue / 100),
+                        ),
                       ),
                     ),
-                    Text(
-                      '${sliderValue.toStringAsFixed(0)}%',
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayLarge!
-                          .copyWith(color: Constants().yellowColor),
+                    Transform.translate(
+                      offset: Offset(
+                          0, lerpDouble(100, 0, animation.value)!.toDouble()),
+                      child: Opacity(
+                        opacity: animation.value,
+                        child: Text(
+                          '${sliderValue.toStringAsFixed(0)}%',
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(color: Constants().yellowColor),
+                        ),
+                      ),
                     ),
                   ],
                 ),

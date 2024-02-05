@@ -19,6 +19,19 @@ class _CoffeMakerPageState extends State<CoffeMakerPage> {
   int indexPageSelected = 0;
 
   @override
+  void didChangeDependencies() {
+    precacheImage(
+        const AssetImage('assets/images/02coffemaker/cow.png'), context);
+    precacheImage(
+        const AssetImage('assets/images/02coffemaker/soy.png'), context);
+    precacheImage(
+        const AssetImage('assets/images/02coffemaker/rice.png'), context);
+    precacheImage(
+        const AssetImage('assets/images/02coffemaker/coconut.png'), context);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Map<String, Widget> pages = {
       'Size': SizePage(onTap: () => setState(() => indexPageSelected = 1)),

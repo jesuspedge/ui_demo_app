@@ -77,8 +77,9 @@ class _FoamPageState extends State<FoamPage> with TickerProviderStateMixin {
                       child: Transform.scale(
                         scale: animation.value,
                         child: CustomPaint(
-                          foregroundPainter: FilledCupPainter(),
-                          painter: FoamCupPainter(percent: sliderValue / 100),
+                          foregroundPainter:
+                              FoamCupPainter(percent: sliderValue / 100),
+                          painter: FilledCupPainter(),
                         ),
                       ),
                     ),

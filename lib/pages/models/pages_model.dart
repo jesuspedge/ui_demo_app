@@ -18,5 +18,9 @@ List<UIPage> pages = [
   UIPage(
       imageName: 'assets/images/02coffemaker.png',
       widgetPage: const CoffeMakerPage(),
-      name: 'Coffe Maker')
+      name: 'Coffe Maker'),
+  UIPage(
+      imageName: 'assets/images/02coffemaker.png',
+      widgetPage: const LampPage(),
+      name: 'RGB Lamp'),
 ];

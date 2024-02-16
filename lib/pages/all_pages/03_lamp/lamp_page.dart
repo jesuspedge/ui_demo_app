@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +16,9 @@ class LampPage extends StatefulWidget {
 }
 
 class _LampPageState extends State<LampPage> {
+  Color selectedColor = const Color(0xFFFBFF00);
+  double opacity = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,19 +50,47 @@ class _LampPageState extends State<LampPage> {
           ),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: Stack(
             children: [
-              const Icon(Icons.light, color: Colors.white),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: CustomSlider(
-                  onSlide: (value) {},
-                  height: 35,
-                  backgroundColor: const Color(0xFF00BDD6),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: CustomSlider(
+                      onSlide: (value) async {
+                        //Fix this
+                        Future.delayed(Duration.zero, () async {
+                          setState(() {
+                            opacity = value;
+                          });
+                        });
+                      },
+                      height: 35,
+                      backgroundColor: selectedColor,
+                    ),
+                  ),
+                  const SizedBox(height: 40)
+                ],
+              ),
+              Positioned(
+                child: Container(
+                  margin: const EdgeInsets.all(40),
+                  decoration: BoxDecoration(
+                    color: selectedColor.withOpacity(
+                        lerpDouble(0.01, 1.0, opacity * 0.1)!.toDouble()),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                          color: selectedColor.withOpacity(opacity),
+                          blurRadius: 100,
+                          spreadRadius: 100),
+                    ],
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),

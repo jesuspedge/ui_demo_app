@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class CustomSlider extends StatefulWidget {
   final double height;
   final Duration animationDuration = const Duration(milliseconds: 300);
-  final Function(double) onSlide;
+  final ValueChanged<double> onSlide;
   final Color backgroundColor;
 
   const CustomSlider(
@@ -48,8 +48,6 @@ class _CustomSliderState extends State<CustomSlider>
 
   @override
   Widget build(BuildContext context) {
-    widget.onSlide(_sliderRelativePosition);
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(_radius),
@@ -114,6 +112,7 @@ class _CustomSliderState extends State<CustomSlider>
 
           setState(() => _sliderRelativePosition =
               max(0, min(1, newSliderRelativePosition)));
+          widget.onSlide(_sliderRelativePosition);
         },
         child: Container(
           height: widget.height,

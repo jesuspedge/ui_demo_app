@@ -60,14 +60,7 @@ class _LampPageState extends State<LampPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: CustomSlider(
-                      onSlide: (value) async {
-                        //Fix this
-                        Future.delayed(Duration.zero, () async {
-                          setState(() {
-                            opacity = value;
-                          });
-                        });
-                      },
+                      onSlide: (value) => setState(() => opacity = value),
                       height: 35,
                       backgroundColor: selectedColor,
                     ),

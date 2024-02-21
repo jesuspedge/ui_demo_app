@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 import 'package:ui_demos/app/app.dart';
 import 'package:ui_demos/home_mobile/home_mobile.dart';
@@ -72,39 +71,10 @@ class _LampPageState extends State<LampPage> {
               Positioned(
                 top: 10,
                 left: 20,
-                child: GestureDetector(
-                  onTap: () {
-                    showAdaptiveDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog.adaptive(
-                            backgroundColor: Colors.white.withOpacity(0.5),
-                            shadowColor: Colors.transparent,
-                            surfaceTintColor: Colors.transparent,
-                            title: const Text(
-                              'Select a color',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            content: MaterialColorPicker(
-                              onColorChange: (value) =>
-                                  setState(() => selectedColor = value),
-                              selectedColor: selectedColor,
-                              allowShades: true,
-                              alignment: WrapAlignment.center,
-                            ),
-                          );
-                        });
-                  },
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: selectedColor,
-                      border: Border.all(
-                          color: Colors.white.withOpacity(0.7), width: 2),
-                    ),
-                  ),
+                child: ColorSelector(
+                  initialColor: selectedColor,
+                  onColorSelected: (color) =>
+                      setState(() => selectedColor = color),
                 ),
               ),
               Positioned(

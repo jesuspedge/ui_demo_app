@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,21 +6,21 @@ import 'package:ui_demos/app/app.dart';
 import 'package:ui_demos/home_mobile/home_mobile.dart';
 import 'package:ui_demos/pages/all_pages/03_lamp/widgets/widgets.dart';
 
-class LampPage extends StatefulWidget {
-  const LampPage({super.key});
+class RgbLightPage extends StatefulWidget {
+  const RgbLightPage({super.key});
 
   @override
-  State<LampPage> createState() => _LampPageState();
+  State<RgbLightPage> createState() => _RgbLightPageState();
 }
 
-class _LampPageState extends State<LampPage> {
+class _RgbLightPageState extends State<RgbLightPage> {
   Color selectedColor = const Color(0xFFFBFF00);
   double opacity = 0.0;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      color: const Color(0xFF0B0916),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -45,12 +43,13 @@ class _LampPageState extends State<LampPage> {
             },
           ),
           title: const Text(
-            'Lamp Page',
+            'RGB Light',
             style: TextStyle(color: Colors.white),
           ),
         ),
         body: Center(
           child: Stack(
+            alignment: Alignment.center,
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -69,28 +68,21 @@ class _LampPageState extends State<LampPage> {
                 ],
               ),
               Positioned(
+                top: 0,
+                child: LightBulbWidget(
+                  height: 400,
+                  width: 200,
+                  opacity: opacity,
+                  selectedColor: selectedColor,
+                ),
+              ),
+              Positioned(
                 top: 10,
                 left: 20,
                 child: ColorSelector(
                   initialColor: selectedColor,
                   onColorSelected: (color) =>
                       setState(() => selectedColor = color),
-                ),
-              ),
-              Positioned(
-                child: Container(
-                  margin: const EdgeInsets.all(40),
-                  decoration: BoxDecoration(
-                    color: selectedColor.withOpacity(
-                        lerpDouble(0.01, 1.0, opacity * 0.1)!.toDouble()),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                          color: selectedColor.withOpacity(opacity),
-                          blurRadius: 100,
-                          spreadRadius: 100),
-                    ],
-                  ),
                 ),
               ),
             ],

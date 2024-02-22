@@ -35,6 +35,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/02coffemaker/
+    - assets/images/03light/
 
   # fonts:
   #   - family: Schyler

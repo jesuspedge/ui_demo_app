@@ -17,27 +17,37 @@ class LightBulbWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red.withOpacity(0.1),
+    return SizedBox(
       height: height,
       width: width,
       child: Stack(
+        alignment: Alignment.center,
         children: [
           Positioned(
-            child: Image.asset('assets/images/03light/lightbulb.png'),
+            top: height * 0.5,
+            child: CircleAvatar(
+              backgroundColor: selectedColor
+                  .withOpacity(lerpDouble(0.05, 1.0, opacity)!.toDouble()),
+            ),
           ),
           Positioned(
+            child: Image.asset(
+              'assets/images/03light/lightbulb.png',
+              fit: BoxFit.contain,
+              color: const Color(0xFF434255),
+            ),
+          ),
+          Positioned(
+            top: height * 0.5,
             child: Container(
               margin: const EdgeInsets.all(40),
               decoration: BoxDecoration(
-                color: selectedColor.withOpacity(
-                    lerpDouble(0.01, 1.0, opacity * 0.1)!.toDouble()),
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
                       color: selectedColor.withOpacity(opacity),
-                      blurRadius: 100,
-                      spreadRadius: 100),
+                      blurRadius: 150,
+                      spreadRadius: 150),
                 ],
               ),
             ),

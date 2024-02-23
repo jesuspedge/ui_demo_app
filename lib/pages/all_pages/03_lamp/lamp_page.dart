@@ -19,6 +19,8 @@ class _RgbLightPageState extends State<RgbLightPage> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.sizeOf(context).height;
+
     return Container(
       color: const Color(0xFF0B0916),
       child: Scaffold(
@@ -70,7 +72,7 @@ class _RgbLightPageState extends State<RgbLightPage> {
               Positioned(
                 top: 0,
                 child: LightBulbWidget(
-                  height: 400,
+                  height: height * 0.6,
                   width: 200,
                   opacity: opacity,
                   selectedColor: selectedColor,

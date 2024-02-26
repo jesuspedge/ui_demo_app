@@ -50,14 +50,26 @@ class _ColorSelectorState extends State<ColorSelector> {
               );
             });
       },
-      child: Container(
-        height: 40,
-        width: 40,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: selectedColor,
-          border: Border.all(color: Colors.white.withOpacity(0.7), width: 2),
-        ),
+      child: Row(
+        children: [
+          Container(
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: selectedColor,
+              border:
+                  Border.all(color: Colors.white.withOpacity(0.7), width: 2),
+            ),
+          ),
+          Text(
+            '  Select a color',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: Colors.white),
+          )
+        ],
       ),
     );
   }

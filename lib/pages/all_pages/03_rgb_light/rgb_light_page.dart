@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ui_demos/app/app.dart';
 import 'package:ui_demos/home_mobile/home_mobile.dart';
-import 'package:ui_demos/pages/all_pages/03_lamp/widgets/widgets.dart';
+import 'package:ui_demos/pages/all_pages/03_rgb_light/widgets/widgets.dart';
 
 class RgbLightPage extends StatefulWidget {
   const RgbLightPage({super.key});

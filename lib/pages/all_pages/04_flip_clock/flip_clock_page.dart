@@ -11,7 +11,7 @@ class FlipClockPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFF0B0916),
+      color: const Color(0xFFC2DCFF),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -38,8 +38,57 @@ class FlipClockPage extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        body: const Center(child: Text('Flip Clock')),
+        body: Center(
+          child: FlipWidget(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: const Text(
+                '0',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 200,
+                  height: 1,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
+    );
+  }
+}
+
+class FlipWidget extends StatelessWidget {
+  final Widget child;
+  const FlipWidget({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ClipRect(
+          child: Align(
+            alignment: Alignment.topCenter,
+            heightFactor: 0.5,
+            child: child,
+          ),
+        ),
+        const SizedBox(height: 2),
+        ClipRect(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            heightFactor: 0.5,
+            child: child,
+          ),
+        ),
+      ],
     );
   }
 }

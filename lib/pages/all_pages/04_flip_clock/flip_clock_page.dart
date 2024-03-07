@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,55 +40,87 @@ class FlipClockPage extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        body: Center(
-          child: FlipWidget(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: const Text(
-                '0',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 200,
-                  height: 1,
-                ),
-              ),
-            ),
-          ),
+        body: const Center(
+          child: FlipNumberWidget(),
         ),
       ),
     );
   }
 }
 
-class FlipWidget extends StatelessWidget {
-  final Widget child;
-  const FlipWidget({super.key, required this.child});
+class FlipNumberWidget extends StatefulWidget {
+  const FlipNumberWidget({
+    super.key,
+  });
+
+  @override
+  State<FlipNumberWidget> createState() => _FlipNumberWidgetState();
+}
+
+class _FlipNumberWidgetState extends State<FlipNumberWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1000));
+
+    _animation = Tween<double>(begin: -(math.pi * 2), end: -math.pi)
+        .animate(_animationController);
+
+    _animation.addListener(() => setState(() {}));
+
+    _animationController.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        ClipRect(
-          child: Align(
-            alignment: Alignment.topCenter,
-            heightFactor: 0.5,
-            child: child,
-          ),
+        ///First element
+        Stack(
+          children: [
+            Container(
+              height: 220,
+              width: 200,
+              decoration: const BoxDecoration(color: Colors.red),
+              child: const Text('0'),
+            ),
+            AnimatedBuilder(
+              animation: _animation,
+              builder: (context, child) {
+                return Transform(
+                  alignment: Alignment.bottomCenter,
+                  transform: Matrix4.identity()
+                    ..setEntry(3, 2, 0.001)
+                    ..rotateX(_animation.value),
+                  child: child,
+                );
+              },
+              child: Container(
+                height: 220,
+                width: 200,
+                decoration: const BoxDecoration(color: Colors.green),
+                child: const Text('1'),
+              ),
+            ),
+          ],
         ),
+
+        ///Division
         const SizedBox(height: 2),
-        ClipRect(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            heightFactor: 0.5,
-            child: child,
-          ),
+
+        ///Second element
+        Container(
+          height: 220,
+          width: 200,
+          decoration: const BoxDecoration(color: Colors.yellow),
+          child: const Text('0'),
         ),
       ],
     );

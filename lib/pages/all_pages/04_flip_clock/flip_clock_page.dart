@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,8 +5,51 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui_demos/app/app.dart';
 import 'package:ui_demos/home_mobile/home_mobile.dart';
 
-class FlipClockPage extends StatelessWidget {
+import 'widgets/flip_number_widget.dart';
+
+class FlipClockPage extends StatefulWidget {
   const FlipClockPage({super.key});
+
+  @override
+  State<FlipClockPage> createState() => _FlipClockPageState();
+}
+
+class _FlipClockPageState extends State<FlipClockPage> {
+  late DateTime _currentTime;
+  late DateTime _newTime;
+  late Stream _timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _currentTime = DateTime.now();
+    _newTime = DateTime.now();
+
+    _timer = Stream.periodic(
+      const Duration(seconds: 1),
+      (_) => _newTime = DateTime.now(),
+    );
+
+    _timer.listen((event) {
+      DateTime newTime = event;
+      if (newTime.minute != _currentTime.minute) {
+        setState(() => _currentTime = event);
+      }
+    });
+  }
+
+  // _listenTimeStream() {
+  //   _timer.listen((event) {
+  //     print(event);
+  //     _currentTime = DateTime.parse(event.toString());
+  //   });
+  // }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,89 +81,13 @@ class FlipClockPage extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        body: const Center(
-          child: FlipNumberWidget(),
+        body: Center(
+          child: FlipNumberWidget(
+            number: _currentTime.minute,
+            timerDuration: const Duration(minutes: 1),
+          ),
         ),
       ),
-    );
-  }
-}
-
-class FlipNumberWidget extends StatefulWidget {
-  const FlipNumberWidget({
-    super.key,
-  });
-
-  @override
-  State<FlipNumberWidget> createState() => _FlipNumberWidgetState();
-}
-
-class _FlipNumberWidgetState extends State<FlipNumberWidget>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation _animation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
-
-    _animation = Tween<double>(begin: -(math.pi * 2), end: -math.pi)
-        .animate(_animationController);
-
-    _animation.addListener(() => setState(() {}));
-
-    _animationController.forward();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ///First element
-        Stack(
-          children: [
-            Container(
-              height: 220,
-              width: 200,
-              decoration: const BoxDecoration(color: Colors.red),
-              child: const Text('0'),
-            ),
-            AnimatedBuilder(
-              animation: _animation,
-              builder: (context, child) {
-                return Transform(
-                  alignment: Alignment.bottomCenter,
-                  transform: Matrix4.identity()
-                    ..setEntry(3, 2, 0.001)
-                    ..rotateX(_animation.value),
-                  child: child,
-                );
-              },
-              child: Container(
-                height: 220,
-                width: 200,
-                decoration: const BoxDecoration(color: Colors.green),
-                child: const Text('1'),
-              ),
-            ),
-          ],
-        ),
-
-        ///Division
-        const SizedBox(height: 2),
-
-        ///Second element
-        Container(
-          height: 220,
-          width: 200,
-          decoration: const BoxDecoration(color: Colors.yellow),
-          child: const Text('0'),
-        ),
-      ],
     );
   }
 }

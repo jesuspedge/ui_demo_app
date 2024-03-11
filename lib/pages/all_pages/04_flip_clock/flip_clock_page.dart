@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,39 +17,23 @@ class FlipClockPage extends StatefulWidget {
 }
 
 class _FlipClockPageState extends State<FlipClockPage> {
-  late DateTime _currentTime;
-  late DateTime _newTime;
-  late Stream _timer;
+  final _timerController = StreamController<DateTime>();
+  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
 
-    _currentTime = DateTime.now();
-    _newTime = DateTime.now();
-
-    _timer = Stream.periodic(
-      const Duration(seconds: 1),
-      (_) => _newTime = DateTime.now(),
-    );
-
-    _timer.listen((event) {
-      DateTime newTime = event;
-      if (newTime.minute != _currentTime.minute) {
-        setState(() => _currentTime = event);
-      }
+    //Adding new value each second
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      _timerController.sink.add(DateTime.now());
     });
   }
 
-  // _listenTimeStream() {
-  //   _timer.listen((event) {
-  //     print(event);
-  //     _currentTime = DateTime.parse(event.toString());
-  //   });
-  // }
-
   @override
   void dispose() {
+    _timerController.close();
+    _timer.cancel();
     super.dispose();
   }
 
@@ -82,10 +68,15 @@ class _FlipClockPageState extends State<FlipClockPage> {
           ),
         ),
         body: Center(
-          child: FlipNumberWidget(
-            number: _currentTime.minute,
-            timerDuration: const Duration(minutes: 1),
-          ),
+          child: StreamBuilder<DateTime>(
+              stream: _timerController.stream,
+              builder: (context, snapshot) {
+                DateTime currentTime = snapshot.data ?? DateTime.now();
+
+                return FlipNumberWidget(
+                  number: currentTime.second,
+                );
+              }),
         ),
       ),
     );

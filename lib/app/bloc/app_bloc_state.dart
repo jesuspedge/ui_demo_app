@@ -5,7 +5,9 @@ final class AppState extends Equatable {
   bool isDesktop;
   Widget pageSelected;
 
-  AppState({this.isDesktop = true, this.pageSelected = const HomeMobilePage()});
+  AppState(
+      {this.isDesktop = true,
+      this.pageSelected = const FlipClockPage() /*HomeMobilePage()*/});
 
   AppState copyWith({
     bool? desktop,

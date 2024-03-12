@@ -11,26 +11,54 @@ class FlipNumberWidget extends StatefulWidget {
 }
 
 class _FlipNumberWidgetState extends State<FlipNumberWidget>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation _animation;
+    with TickerProviderStateMixin {
+  late AnimationController _animationTopHalfController;
+  late AnimationController _animationBottomHalfController;
+
+  late Animation _animationTopHalf;
+  late Animation _animationBottomHalf;
+
+  late int _numberWhenAnimationEnds;
 
   @override
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 800));
+    _animationTopHalfController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 400))
+      ..addListener(() => setState(() => {}));
+    _animationBottomHalfController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 400))
+      ..addListener(() => setState(() => {}));
 
-    _animation = Tween<double>(begin: -(math.pi * 2), end: -(math.pi * 1.5))
-        .animate(_animationController);
+    _animationTopHalf =
+        Tween<double>(begin: -(math.pi * 2), end: -(math.pi * 1.5))
+            .animate(_animationTopHalfController);
+    _animationBottomHalf =
+        Tween<double>(begin: -(math.pi * 1.5), end: -(math.pi))
+            .animate(_animationBottomHalfController);
 
-    _animation.addListener(() => setState(() {}));
+    _numberWhenAnimationEnds = widget.number;
+  }
+
+  Future<void> initAnimation() async {
+    _animationTopHalfController.forward();
+    if (_animationTopHalfController.isCompleted) {
+      _animationBottomHalfController.forward();
+    }
+
+    if (_animationTopHalfController.isCompleted &&
+        _animationBottomHalfController.isCompleted) {
+      setState(() => _numberWhenAnimationEnds = widget.number);
+      _animationTopHalfController.reset();
+      _animationBottomHalfController.reset();
+    }
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationTopHalfController.dispose();
+    _animationBottomHalfController.dispose();
     super.dispose();
   }
 
@@ -39,9 +67,7 @@ class _FlipNumberWidgetState extends State<FlipNumberWidget>
     String number =
         widget.number < 10 ? '0${widget.number}' : widget.number.toString();
 
-    _animationController
-        .forward()
-        .whenComplete(() => _animationController.reset());
+    if (_numberWhenAnimationEnds != widget.number) initAnimation();
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -58,13 +84,13 @@ class _FlipNumberWidgetState extends State<FlipNumberWidget>
                 alignment: Alignment.topCenter,
                 heightFactor: 0.5,
                 child: AnimatedBuilder(
-                  animation: _animation,
+                  animation: _animationTopHalf,
                   builder: (context, child) {
                     return Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.identity()
                         ..setEntry(3, 2, 0.001)
-                        ..rotateX(_animation.value),
+                        ..rotateX(_animationTopHalf.value),
                       child: child,
                     );
                   },
@@ -76,10 +102,34 @@ class _FlipNumberWidgetState extends State<FlipNumberWidget>
         ),
         const SizedBox(height: 2),
         ClipRect(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            heightFactor: 0.5,
-            child: NumberContainer(number: number),
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.bottomCenter,
+                heightFactor: 0.5,
+                child: NumberContainer(number: number),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                heightFactor: 0.5,
+                child: AnimatedBuilder(
+                  animation: _animationBottomHalf,
+                  builder: (context, child) {
+                    return Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.identity()
+                        ..setEntry(3, 2, 0.001)
+                        ..rotateX(_animationBottomHalf.value),
+                      child: child,
+                    );
+                  },
+                  child: Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.rotationX(math.pi),
+                      child: NumberContainer(number: number)),
+                ),
+              ),
+            ],
           ),
         ),
       ],

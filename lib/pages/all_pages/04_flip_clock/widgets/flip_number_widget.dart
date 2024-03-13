@@ -20,6 +20,8 @@ class _FlipNumberWidgetState extends State<FlipNumberWidget>
 
   late int _numberWhenAnimationEnds;
 
+  bool _animationEnds = true;
+
   @override
   void initState() {
     super.initState();
@@ -42,7 +44,9 @@ class _FlipNumberWidgetState extends State<FlipNumberWidget>
   }
 
   Future<void> initAnimation() async {
+    setState(() => _animationEnds = false);
     _animationTopHalfController.forward();
+
     if (_animationTopHalfController.isCompleted) {
       _animationBottomHalfController.forward();
     }
@@ -50,6 +54,7 @@ class _FlipNumberWidgetState extends State<FlipNumberWidget>
     if (_animationTopHalfController.isCompleted &&
         _animationBottomHalfController.isCompleted) {
       setState(() => _numberWhenAnimationEnds = widget.number);
+      setState(() => _animationEnds = true);
       _animationTopHalfController.reset();
       _animationBottomHalfController.reset();
     }
@@ -64,8 +69,11 @@ class _FlipNumberWidgetState extends State<FlipNumberWidget>
 
   @override
   Widget build(BuildContext context) {
-    String number =
+    String currentNumber =
         widget.number < 10 ? '0${widget.number}' : widget.number.toString();
+    String previusNumber = _numberWhenAnimationEnds < 10
+        ? '0$_numberWhenAnimationEnds'
+        : _numberWhenAnimationEnds.toString();
 
     if (_numberWhenAnimationEnds != widget.number) initAnimation();
 
@@ -78,7 +86,7 @@ class _FlipNumberWidgetState extends State<FlipNumberWidget>
               Align(
                 alignment: Alignment.topCenter,
                 heightFactor: 0.5,
-                child: NumberContainer(number: number),
+                child: NumberContainer(number: currentNumber),
               ),
               Align(
                 alignment: Alignment.topCenter,
@@ -94,7 +102,8 @@ class _FlipNumberWidgetState extends State<FlipNumberWidget>
                       child: child,
                     );
                   },
-                  child: NumberContainer(number: number),
+                  child: NumberContainer(
+                      number: _animationEnds ? currentNumber : previusNumber),
                 ),
               ),
             ],
@@ -107,7 +116,8 @@ class _FlipNumberWidgetState extends State<FlipNumberWidget>
               Align(
                 alignment: Alignment.bottomCenter,
                 heightFactor: 0.5,
-                child: NumberContainer(number: number),
+                child: NumberContainer(
+                    number: _animationEnds ? currentNumber : previusNumber),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -126,7 +136,7 @@ class _FlipNumberWidgetState extends State<FlipNumberWidget>
                   child: Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.rotationX(math.pi),
-                      child: NumberContainer(number: number)),
+                      child: NumberContainer(number: currentNumber)),
                 ),
               ),
             ],

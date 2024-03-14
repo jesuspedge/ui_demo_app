@@ -40,7 +40,16 @@ class _FlipClockPageState extends State<FlipClockPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFFC2DCFF),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF182848),
+            Color(0xFF4B6CB7),
+          ],
+        ),
+      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(

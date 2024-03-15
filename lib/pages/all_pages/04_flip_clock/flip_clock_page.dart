@@ -82,8 +82,24 @@ class _FlipClockPageState extends State<FlipClockPage> {
               builder: (context, snapshot) {
                 DateTime currentTime = snapshot.data ?? DateTime.now();
 
-                return FlipNumberWidget(
-                  number: currentTime.second,
+                return SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FlipNumberWidget(
+                        number: currentTime.hour,
+                      ),
+                      const SizedBox(height: 10),
+                      FlipNumberWidget(
+                        number: currentTime.minute,
+                      ),
+                      const SizedBox(height: 10),
+                      FlipNumberWidget(
+                        number: currentTime.second,
+                      ),
+                    ],
+                  ),
                 );
               }),
         ),

@@ -24,7 +24,7 @@ List<UIPage> pages = [
       widgetPage: const RgbLightPage(),
       name: 'RGB Light'),
   UIPage(
-      imageName: 'assets/images/03rgblight.png',
+      imageName: 'assets/images/04flipclock.png',
       widgetPage: const FlipClockPage(),
       name: 'Flip Clock'),
 ];

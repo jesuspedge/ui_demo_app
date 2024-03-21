@@ -4,6 +4,7 @@ import 'dart:html' as html;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:ui_demos/app/app.dart';
 import 'package:ui_demos/pages/pages.dart';
 
@@ -48,14 +49,15 @@ class _HomeMobilePageState extends State<HomeMobilePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
                   margin: const EdgeInsets.all(5),
-                  padding: const EdgeInsets.all(2),
+                  padding: const EdgeInsets.all(5),
                   decoration: const BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
-                  child: Image.asset(
-                    'assets/images/github_logo.png',
+                  child: const Icon(
+                    Bootstrap.github,
                     color: Colors.white,
+                    size: 30,
                   ),
                 ),
               ),

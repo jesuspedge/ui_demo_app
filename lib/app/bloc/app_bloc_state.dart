@@ -8,12 +8,13 @@ final class AppState extends Equatable {
   AppState({this.isDesktop = true, this.pageSelected = const HomeMobilePage()});
 
   AppState copyWith({
-    bool? desktop,
-    Widget? newPageSelected,
+    bool? isDesktop,
+    Widget? pageSelected,
   }) =>
       AppState(
-          isDesktop: desktop ?? isDesktop,
-          pageSelected: newPageSelected ?? pageSelected);
+        isDesktop: isDesktop ?? this.isDesktop,
+        pageSelected: pageSelected ?? this.pageSelected,
+      );
 
   @override
   List<Object> get props => [isDesktop, pageSelected];

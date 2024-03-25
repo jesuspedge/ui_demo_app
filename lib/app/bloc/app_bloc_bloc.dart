@@ -15,9 +15,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   void _changeIsDesktop(ChangeIsDesktopEvent event, Emitter<AppState> emit) =>
-      emit(state.copyWith(desktop: event.isDesktop));
+      emit(state.copyWith(isDesktop: event.isDesktop));
 
   void _changePageSelected(
           ChangePageSelectedEvent event, Emitter<AppState> emit) =>
-      emit(state.copyWith(newPageSelected: event.pageSelected));
+      emit(state.copyWith(pageSelected: event.pageSelected));
 }

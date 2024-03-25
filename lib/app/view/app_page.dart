@@ -25,7 +25,7 @@ class _UIDemosAppState extends State<UIDemosApp> {
 }
 
 class UIDemosAppView extends StatelessWidget {
-  const UIDemosAppView({Key? key}) : super(key: key);
+  const UIDemosAppView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,17 +64,23 @@ bool isDesktop() {
     case TargetPlatform.linux:
       return true;
 
-    default:
+    case TargetPlatform.android:
+      return false;
+
+    case TargetPlatform.fuchsia:
+      return false;
+
+    case TargetPlatform.iOS:
       return false;
   }
 }
 
-Route customRoute(Widget page) {
+Route<Widget> customRoute(Widget page) {
   return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: ((context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-            opacity: animation,
-            child: child,
-          )));
+    pageBuilder: (context, animation, secondaryAnimation) => page,
+    transitionsBuilder: (_, animation, __, child) => FadeTransition(
+      opacity: animation,
+      child: child,
+    ),
+  );
 }

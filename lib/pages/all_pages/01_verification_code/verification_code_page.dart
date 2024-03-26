@@ -5,7 +5,7 @@ import 'package:ui_demos/app/app.dart';
 import 'package:ui_demos/home_mobile/home_mobile.dart';
 
 class VerificationCodePage extends StatefulWidget {
-  const VerificationCodePage({Key? key}) : super(key: key);
+  const VerificationCodePage({super.key});
 
   @override
   State<VerificationCodePage> createState() => _VerificationCodePageState();
@@ -15,23 +15,24 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
   List<String> numbersList = ['-1', '-1', '-1', '-1'];
 
   double progressPercent() {
-    var results = numbersList.where((element) => element != '-1');
+    final results = numbersList.where((element) => element != '-1');
     return results.length / numbersList.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    double percent = progressPercent();
+    final percent = progressPercent();
 
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF005C97),
-              Color(0xFF363795),
-            ]),
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF005C97),
+            Color(0xFF363795),
+          ],
+        ),
       ),
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),
@@ -43,14 +44,19 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
               return GestureDetector(
                 onTap: () {
                   if (state.isDesktop) {
-                    context.read<AppBloc>().add(const ChangePageSelectedEvent(
-                        pageSelected: HomeMobilePage()));
+                    context.read<AppBloc>().add(
+                          const ChangePageSelectedEvent(
+                            pageSelected: HomeMobilePage(),
+                          ),
+                        );
                   } else {
                     Navigator.of(context).pop();
                   }
                 },
-                child: const Icon(Icons.arrow_back_ios_new_rounded,
-                    color: Colors.white),
+                child: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: Colors.white,
+                ),
               );
             },
           ),
@@ -60,7 +66,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -77,7 +83,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                   RichText(
                     text: TextSpan(
                       text:
-                          'Please enter the code we sent to the number ********73.',
+                          '''Please enter the code we sent to the number ********73.''',
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: Colors.white.withOpacity(0.5),
                           ),
@@ -147,8 +153,9 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                     Text(
                       'RESEND CODE',
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Colors.deepPurple,
-                          fontWeight: FontWeight.bold),
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ],
                 ),
@@ -156,18 +163,21 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
               ElevatedButton(
                 onPressed: numbersList.contains('-1') ? null : () {},
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
-                    elevation: 1.0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10))),
+                  backgroundColor: Colors.deepPurple,
+                  elevation: 1,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
                 child: Text(
                   'Submit',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: numbersList.contains('-1')
-                          ? Colors.white.withOpacity(0.6)
-                          : Colors.white),
+                        color: numbersList.contains('-1')
+                            ? Colors.white.withOpacity(0.6)
+                            : Colors.white,
+                      ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -177,12 +187,12 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 }
 
 class CustomNumberForm extends StatelessWidget {
-  final Function(String) onChange;
-
   const CustomNumberForm({
-    super.key,
     required this.onChange,
+    super.key,
   });
+
+  final void Function(String)? onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +211,7 @@ class CustomNumberForm extends StatelessWidget {
         cursorColor: Colors.white.withOpacity(0.5),
         inputFormatters: [
           LengthLimitingTextInputFormatter(1),
-          FilteringTextInputFormatter.digitsOnly
+          FilteringTextInputFormatter.digitsOnly,
         ],
         decoration: InputDecoration(
           filled: true,
@@ -226,9 +236,8 @@ class CustomNumberForm extends StatelessWidget {
 }
 
 class CustomProgressIndicator extends StatefulWidget {
+  const CustomProgressIndicator({required this.percent, super.key});
   final double percent;
-  const CustomProgressIndicator({Key? key, required this.percent})
-      : super(key: key);
 
   @override
   State<CustomProgressIndicator> createState() =>
@@ -263,7 +272,7 @@ class _CustomProgressIndicatorState extends State<CustomProgressIndicator>
       children: [
         Positioned.fill(
           child: CircularProgressIndicator(
-            value: 1.0,
+            value: 1,
             color: Colors.white.withOpacity(0.05),
             strokeWidth: 40,
           ),
@@ -280,7 +289,7 @@ class _CustomProgressIndicatorState extends State<CustomProgressIndicator>
             '${(widget.percent * 100).toStringAsFixed(0)}%',
             style: const TextStyle(color: Colors.white, fontSize: 30),
           ),
-        )
+        ),
       ],
     );
   }

@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:ui_demos/pages/all_pages/02_coffe_maker/constanst.dart';
 
 class MilkBalancePage extends StatefulWidget {
+  const MilkBalancePage({
+    required this.onTap,
+    super.key,
+  });
   final void Function() onTap;
-  const MilkBalancePage({super.key, required this.onTap});
 
   @override
   State<MilkBalancePage> createState() => _MilkBalancePageState();
@@ -15,17 +18,22 @@ class MilkBalancePage extends StatefulWidget {
 class _MilkBalancePageState extends State<MilkBalancePage>
     with TickerProviderStateMixin {
   late AnimationController animationController;
-  late Animation animation;
+  late Animation<double> animation;
   double sliderValue = 0;
 
   @override
   void initState() {
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 400))
-      ..addListener(() => setState(() {}));
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    )..addListener(() => setState(() {}));
 
-    animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
-        parent: animationController, curve: Curves.fastOutSlowIn));
+    animation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: Curves.fastOutSlowIn,
+      ),
+    );
 
     super.initState();
 
@@ -40,13 +48,13 @@ class _MilkBalancePageState extends State<MilkBalancePage>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: Constants().backColor.withOpacity(0.6),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Transform.translate(
-            offset: Offset(0, lerpDouble(200, 0, animation.value)!.toDouble()),
+            offset: Offset(0, lerpDouble(200, 0, animation.value)!),
             child: Opacity(
               opacity: animation.value,
               child: Text(
@@ -69,8 +77,7 @@ class _MilkBalancePageState extends State<MilkBalancePage>
                   value: sliderValue,
                   onChanged: (newValue) =>
                       setState(() => sliderValue = newValue),
-                  min: 0.0,
-                  max: 100.0,
+                  max: 100,
                   thumbColor: Constants().whiteColor,
                   activeColor: Constants().whiteColor,
                   inactiveColor: Constants().blueColor,

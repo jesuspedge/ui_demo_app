@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:ui_demos/pages/all_pages/02_coffe_maker/constanst.dart';
 
 class FoamPage extends StatefulWidget {
+  const FoamPage({
+    required this.onTap,
+    super.key,
+  });
   final void Function() onTap;
-  const FoamPage({super.key, required this.onTap});
 
   @override
   State<FoamPage> createState() => _FoamPageState();
@@ -14,17 +17,22 @@ class FoamPage extends StatefulWidget {
 
 class _FoamPageState extends State<FoamPage> with TickerProviderStateMixin {
   late AnimationController animationController;
-  late Animation animation;
+  late Animation<double> animation;
   double sliderValue = 0;
 
   @override
   void initState() {
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 400))
-      ..addListener(() => setState(() {}));
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    )..addListener(() => setState(() {}));
 
-    animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
-        parent: animationController, curve: Curves.fastOutSlowIn));
+    animation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: Curves.fastOutSlowIn,
+      ),
+    );
 
     super.initState();
 
@@ -39,7 +47,7 @@ class _FoamPageState extends State<FoamPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: Constants().backColor.withOpacity(0.6),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -60,8 +68,7 @@ class _FoamPageState extends State<FoamPage> with TickerProviderStateMixin {
                         value: sliderValue,
                         onChanged: (newValue) =>
                             setState(() => sliderValue = newValue),
-                        min: 0.0,
-                        max: 100.0,
+                        max: 100,
                         thumbColor: Constants().whiteColor,
                         activeColor: Constants().whiteColor,
                         inactiveColor: Constants().yellowColor,
@@ -85,7 +92,9 @@ class _FoamPageState extends State<FoamPage> with TickerProviderStateMixin {
                     ),
                     Transform.translate(
                       offset: Offset(
-                          0, lerpDouble(100, 0, animation.value)!.toDouble()),
+                        0,
+                        lerpDouble(100, 0, animation.value)!,
+                      ),
                       child: Opacity(
                         opacity: animation.value,
                         child: Text(
@@ -126,27 +135,39 @@ class FilledCupPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..color = Constants().yellowColor;
 
-    final arc1 = Path();
-    arc1.moveTo(0, 0);
-    arc1.arcToPoint(Offset(size.width * 0.2, size.height * 0.8),
-        radius: const Radius.circular(200), clockwise: false);
+    final arc1 = Path()
+      ..moveTo(0, 0)
+      ..arcToPoint(
+        Offset(size.width * 0.2, size.height * 0.8),
+        radius: const Radius.circular(200),
+        clockwise: false,
+      );
 
-    canvas.drawPath(arc1, painter);
+    canvas
+      ..drawPath(arc1, painter)
+      ..drawLine(
+        Offset(size.width * 0.2, size.height * 0.8),
+        Offset(size.width * 0.75, size.height * 0.8),
+        painter,
+      );
 
-    canvas.drawLine(Offset(size.width * 0.2, size.height * 0.8),
-        Offset(size.width * 0.75, size.height * 0.8), painter);
-
-    final arc2 = Path();
-    arc2.moveTo(size.width * 0.75, size.height * 0.8);
-    arc2.arcToPoint(Offset(size.width * 0.9, 0),
-        radius: const Radius.circular(200), clockwise: false);
+    final arc2 = Path()
+      ..moveTo(size.width * 0.75, size.height * 0.8)
+      ..arcToPoint(
+        Offset(size.width * 0.9, 0),
+        radius: const Radius.circular(200),
+        clockwise: false,
+      );
 
     canvas.drawPath(arc2, painter);
 
-    final arc3 = Path();
-    arc3.moveTo(size.width * 0.8, size.height * 0.6);
-    arc3.arcToPoint(Offset(size.width * 0.9, size.height * 0.15),
-        radius: const Radius.circular(15), clockwise: false);
+    final arc3 = Path()
+      ..moveTo(size.width * 0.8, size.height * 0.6)
+      ..arcToPoint(
+        Offset(size.width * 0.9, size.height * 0.15),
+        radius: const Radius.circular(15),
+        clockwise: false,
+      );
 
     canvas.drawPath(arc3, painter);
   }
@@ -156,9 +177,13 @@ class FilledCupPainter extends CustomPainter {
 }
 
 class FoamCupPainter extends CustomPainter {
+  FoamCupPainter({
+    required this.percent,
+    super.repaint,
+  });
+
   final double percent;
 
-  FoamCupPainter({super.repaint, required this.percent});
   @override
   void paint(Canvas canvas, Size size) {
     final painter = Paint()
@@ -168,14 +193,17 @@ class FoamCupPainter extends CustomPainter {
     final path = Path()
       ..moveTo(size.width * 0.07, 0)
       ..arcToPoint(
-          Offset(size.width * lerpDouble(0.07, 0.25, percent)!.toDouble(),
+          Offset(size.width * lerpDouble(0.07, 0.25, percent)!,
               (size.height * percent) * 0.75),
           radius: const Radius.circular(200),
           clockwise: false)
-      ..lineTo(size.width * lerpDouble(0.83, 0.7, percent)!.toDouble(),
+      ..lineTo(size.width * lerpDouble(0.83, 0.7, percent)!,
           (size.height * percent) * 0.75)
-      ..arcToPoint(Offset(size.width * 0.83, 0),
-          radius: const Radius.circular(200), clockwise: false);
+      ..arcToPoint(
+        Offset(size.width * 0.83, 0),
+        radius: const Radius.circular(200),
+        clockwise: false,
+      );
 
     canvas.drawPath(path, painter);
   }

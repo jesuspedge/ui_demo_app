@@ -15,13 +15,13 @@ class RgbLightPage extends StatefulWidget {
 
 class _RgbLightPageState extends State<RgbLightPage> {
   Color selectedColor = const Color(0xFFFBFF00);
-  double opacity = 0.0;
+  double opacity = 0;
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
 
-    return Container(
+    return ColoredBox(
       color: const Color(0xFF0B0916),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -33,14 +33,19 @@ class _RgbLightPageState extends State<RgbLightPage> {
               return GestureDetector(
                 onTap: () {
                   if (state.isDesktop) {
-                    context.read<AppBloc>().add(const ChangePageSelectedEvent(
-                        pageSelected: HomeMobilePage()));
+                    context.read<AppBloc>().add(
+                          const ChangePageSelectedEvent(
+                            pageSelected: HomeMobilePage(),
+                          ),
+                        );
                   } else {
                     Navigator.of(context).pop();
                   }
                 },
-                child: const Icon(Icons.arrow_back_ios_new_rounded,
-                    color: Colors.white),
+                child: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: Colors.white,
+                ),
               );
             },
           ),
@@ -55,18 +60,16 @@ class _RgbLightPageState extends State<RgbLightPage> {
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Spacer(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: CustomSlider(
                       onSlide: (value) => setState(() => opacity = value),
-                      height: 35,
                       backgroundColor: selectedColor,
                     ),
                   ),
-                  const SizedBox(height: 40)
+                  const SizedBox(height: 40),
                 ],
               ),
               Positioned(

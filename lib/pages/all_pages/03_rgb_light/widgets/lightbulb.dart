@@ -3,17 +3,18 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class LightBulbWidget extends StatelessWidget {
+  const LightBulbWidget({
+    required this.height,
+    required this.width,
+    required this.opacity,
+    required this.selectedColor,
+    super.key,
+  });
+
   final double height;
   final double width;
   final double opacity;
   final Color selectedColor;
-
-  const LightBulbWidget(
-      {super.key,
-      required this.height,
-      required this.width,
-      required this.opacity,
-      required this.selectedColor});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +27,8 @@ class LightBulbWidget extends StatelessWidget {
           Positioned(
             top: height * 0.5,
             child: CircleAvatar(
-              backgroundColor: selectedColor
-                  .withOpacity(lerpDouble(0.05, 1.0, opacity)!.toDouble()),
+              backgroundColor:
+                  selectedColor.withOpacity(lerpDouble(0.05, 1.0, opacity)!),
             ),
           ),
           Positioned(
@@ -45,9 +46,10 @@ class LightBulbWidget extends StatelessWidget {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                      color: selectedColor.withOpacity(opacity),
-                      blurRadius: 150,
-                      spreadRadius: 150),
+                    color: selectedColor.withOpacity(opacity),
+                    blurRadius: 150,
+                    spreadRadius: 150,
+                  ),
                 ],
               ),
             ),

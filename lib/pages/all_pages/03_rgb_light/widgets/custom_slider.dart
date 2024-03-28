@@ -3,16 +3,16 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class CustomSlider extends StatefulWidget {
+  const CustomSlider({
+    required this.onSlide,
+    required this.backgroundColor,
+    this.height = 35,
+    super.key,
+  });
+
   final double height;
-  final Duration animationDuration = const Duration(milliseconds: 300);
   final ValueChanged<double> onSlide;
   final Color backgroundColor;
-
-  const CustomSlider(
-      {required this.onSlide,
-      required this.backgroundColor,
-      this.height = 35,
-      super.key});
 
   @override
   State<CustomSlider> createState() => _CustomSliderState();
@@ -20,17 +20,19 @@ class CustomSlider extends StatefulWidget {
 
 class _CustomSliderState extends State<CustomSlider>
     with SingleTickerProviderStateMixin {
-  double _sliderRelativePosition = 0.0;
-  double _startedDraggingAtX = 0.0;
+  double _sliderRelativePosition = 0;
+  double _startedDraggingAtX = 0;
+  Duration animationDuration = const Duration(milliseconds: 300);
+
   late final AnimationController _animationController;
-  late final Animation _sliderAnimation;
+  late final Animation<double> _sliderAnimation;
 
   @override
   void initState() {
     super.initState();
 
     _animationController =
-        AnimationController(vsync: this, duration: widget.animationDuration);
+        AnimationController(vsync: this, duration: animationDuration);
 
     _sliderAnimation =
         CurveTween(curve: Curves.easeInQuad).animate(_animationController);
@@ -53,25 +55,30 @@ class _CustomSliderState extends State<CustomSlider>
         borderRadius: BorderRadius.all(_radius),
         border: _border,
       ),
-      child: LayoutBuilder(builder: (_, BoxConstraints constraints) {
-        final sliderRadius = widget.height / 2;
-        final sliderMaxX = constraints.maxWidth - 2 * sliderRadius;
-        final sliderPosX = sliderMaxX * _sliderRelativePosition;
+      child: LayoutBuilder(
+        builder: (_, BoxConstraints constraints) {
+          final sliderRadius = widget.height / 2;
+          final sliderMaxX = constraints.maxWidth - 2 * sliderRadius;
+          final sliderPosX = sliderMaxX * _sliderRelativePosition;
 
-        return Stack(
-          children: [
-            _buildBackground(
+          return Stack(
+            children: [
+              _buildBackground(
                 width: constraints.maxWidth,
-                backgroundSplitX: sliderPosX + sliderRadius),
-            _buildSlider(sliderMaxX: sliderMaxX, sliderPositionX: sliderPosX),
-          ],
-        );
-      }),
+                backgroundSplitX: sliderPosX + sliderRadius,
+              ),
+              _buildSlider(sliderMaxX: sliderMaxX, sliderPositionX: sliderPosX),
+            ],
+          );
+        },
+      ),
     );
   }
 
-  Widget _buildBackground(
-      {required double width, required double backgroundSplitX}) {
+  Widget _buildBackground({
+    required double width,
+    required double backgroundSplitX,
+  }) {
     return Row(
       children: [
         Container(
@@ -91,13 +98,15 @@ class _CustomSliderState extends State<CustomSlider>
                 BorderRadius.only(topRight: _radius, bottomRight: _radius),
             color: Colors.white.withOpacity(0.2),
           ),
-        )
+        ),
       ],
     );
   }
 
-  Widget _buildSlider(
-      {required double sliderMaxX, required double sliderPositionX}) {
+  Widget _buildSlider({
+    required double sliderMaxX,
+    required double sliderPositionX,
+  }) {
     return Positioned(
       left: sliderPositionX,
       child: GestureDetector(
@@ -110,8 +119,10 @@ class _CustomSliderState extends State<CustomSlider>
               _startedDraggingAtX + update.localPosition.dx;
           final newSliderRelativePosition = newSliderPositionX / sliderMaxX;
 
-          setState(() => _sliderRelativePosition =
-              max(0, min(1, newSliderRelativePosition)));
+          setState(
+            () => _sliderRelativePosition =
+                max(0, min(1, newSliderRelativePosition)),
+          );
           widget.onSlide(_sliderRelativePosition);
         },
         child: Container(
